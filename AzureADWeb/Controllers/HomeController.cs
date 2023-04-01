@@ -27,10 +27,13 @@ namespace AzureADWeb.Controllers
         {
             return View();
         }
+        
+        // must give it a Redirection URL, or after Challenge, it will be confused where to go and will encounter Dead Loop
         public IActionResult SignIn()
         {
             var schema = OpenIdConnectDefaults.AuthenticationScheme;
-            return Challenge(new AuthenticationProperties(), schema);
+            var redirectUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
+            return Challenge(new AuthenticationProperties {RedirectUri = redirectUrl}, schema) ;
         }
 
         public IActionResult SignOut()
