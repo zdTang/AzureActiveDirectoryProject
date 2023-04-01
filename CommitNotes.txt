@@ -1,2 +1,4 @@
 07.
 Add [Authorize] on Pravicy Action. has Exception.
+07-2
+Add a UseAuthentication() at the Program.cs file, useless, still has exception, need setup schema.
