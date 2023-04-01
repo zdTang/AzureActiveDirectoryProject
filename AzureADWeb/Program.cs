@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(options =>
 }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
-    options.SignInScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.Authority = "https://login.microsoftonline.com/5950d41d-9b21-4de2-bd66-bd8e54f0bd86/v2.0";
     options.ClientId = "85f87650-66e3-4b1d-a3ad-1aeabbaf3000";
     options.ResponseType = "id_token";

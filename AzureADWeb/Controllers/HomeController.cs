@@ -1,4 +1,7 @@
 ﻿using AzureADWeb.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -23,6 +26,17 @@ namespace AzureADWeb.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+        public IActionResult SignIn()
+        {
+            var schema = OpenIdConnectDefaults.AuthenticationScheme;
+            return Challenge(new AuthenticationProperties(), schema);
+        }
+
+        public IActionResult SignOut()
+        {
+            var schema = OpenIdConnectDefaults.AuthenticationScheme;
+            return SignOut(new AuthenticationProperties(),CookieAuthenticationDefaults.AuthenticationScheme, schema);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
