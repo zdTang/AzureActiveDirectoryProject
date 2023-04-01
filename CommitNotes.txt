@@ -2,3 +2,9 @@
 Add [Authorize] on Pravicy Action. has Exception.
 07-2
 Add a UseAuthentication() at the Program.cs file, useless, still has exception, need setup schema.
+09- 
+Here to configure Azure, to setup which Application will use this Azure to authenticate
+Here we will be given lots of Secrets Keys, we will use those Secret key or token to connect our Project with Azure AD
+Here to setup URL for signIn and SignOut
+Here also to setup Permissioins( what can do and what cannot do), this promission can be modified by Microsoft Graph.
+    
