@@ -1,0 +1,2 @@
+07.
+Add [Authorize] on Pravicy Action. has Exception.
