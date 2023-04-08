@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+
 namespace AzureADB2CWeb
 {
     public class Program
@@ -8,7 +12,31 @@ namespace AzureADB2CWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // This is using Cookie under the hood
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;//OpenId Connect
+            }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            {
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.Authority = "https://login.microsoftonline.com/5950d41d-9b21-4de2-bd66-bd8e54f0bd86/v2.0";
+                options.ClientId = "85f87650-66e3-4b1d-a3ad-1aeabbaf3000";
+                //options.ResponseType = "id_token";   // This value must match AD's configuration, another option is "Access Token"?
 
+                //https://sazzer.github.io/blog/2016/09/03/OpenID-Connect-Response-Types/
+                /*  The actual set of response types are:
+                    code - The requester would like an Authorization Code to be returned to them
+                    token - The requester would like an Access Token to be returned to them
+                    id_token - The requester would like an ID Token to be returned to them
+                    none - The requester doesn’t want any of the above to be returned to them
+                 */
+                options.ResponseType = "code";    // when authenticate with "secret" other than "token"
+                options.SaveTokens = true;
+                options.Scope.Add("api://f70e9921-f18f-4613-a455-e262780e9d56/AdminAcess");
+                options.ClientSecret = "sKR8Q~dxuWtrqom7BNcS7JB9DNl6iwrgR.X-Ednd";// the "value" of the "Secret" created in AD
+                options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -24,6 +52,7 @@ namespace AzureADB2CWeb
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
