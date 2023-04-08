@@ -27,9 +27,9 @@ builder.Services.AddAuthentication(options =>
         id_token - The requester would like an ID Token to be returned to them
         none - The requester doesn’t want any of the above to be returned to them
      */
-    options.Scope.Add("api://f70e9921-f18f-4613-a455-e262780e9d56/AdminAcess");
     options.ResponseType = "code";    // when authenticate with "secret" other than "token"
     options.SaveTokens = true;
+    options.Scope.Add("api://f70e9921-f18f-4613-a455-e262780e9d56/AdminAcess");
     options.ClientSecret = "sKR8Q~dxuWtrqom7BNcS7JB9DNl6iwrgR.X-Ednd";// the "value" of the "Secret" created in AD
 });
 
