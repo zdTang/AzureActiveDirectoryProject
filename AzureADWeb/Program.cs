@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
     options.Scope.Add("api://f70e9921-f18f-4613-a455-e262780e9d56/AdminAcess");
     options.ClientSecret = "sKR8Q~dxuWtrqom7BNcS7JB9DNl6iwrgR.X-Ednd";// the "value" of the "Secret" created in AD
+    options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
 });
 
 var app = builder.Build();
