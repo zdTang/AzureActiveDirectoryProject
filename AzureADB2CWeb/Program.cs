@@ -20,8 +20,9 @@ namespace AzureADB2CWeb
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "";
-                options.ClientId = "";
+                // After adding the policy, copy the part before ".well_known" from the URL
+                options.Authority = "https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
+                options.ClientId = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
                 //options.ResponseType = "id_token";   // This value must match AD's configuration, another option is "Access Token"?
 
                 //https://sazzer.github.io/blog/2016/09/03/OpenID-Connect-Response-Types/
@@ -33,8 +34,8 @@ namespace AzureADB2CWeb
                  */
                 options.ResponseType = "code";    // when authenticate with "secret" other than "token"
                 options.SaveTokens = true;
-                options.Scope.Add("");
-                options.ClientSecret = "";// the "value" of the "Secret" created in AD
+                //options.Scope.Add("");
+                options.ClientSecret = "dOS8Q~Z~ctkfGKsuHcMiQlc.YXRVsmj5mKOtwdc5";
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
             });
             var app = builder.Build();
