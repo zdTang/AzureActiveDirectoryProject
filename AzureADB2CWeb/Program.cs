@@ -20,8 +20,8 @@ namespace AzureADB2CWeb
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "https://login.microsoftonline.com/5950d41d-9b21-4de2-bd66-bd8e54f0bd86/v2.0";
-                options.ClientId = "85f87650-66e3-4b1d-a3ad-1aeabbaf3000";
+                options.Authority = "";
+                options.ClientId = "";
                 //options.ResponseType = "id_token";   // This value must match AD's configuration, another option is "Access Token"?
 
                 //https://sazzer.github.io/blog/2016/09/03/OpenID-Connect-Response-Types/
@@ -33,8 +33,8 @@ namespace AzureADB2CWeb
                  */
                 options.ResponseType = "code";    // when authenticate with "secret" other than "token"
                 options.SaveTokens = true;
-                options.Scope.Add("api://f70e9921-f18f-4613-a455-e262780e9d56/AdminAcess");
-                options.ClientSecret = "sKR8Q~dxuWtrqom7BNcS7JB9DNl6iwrgR.X-Ednd";// the "value" of the "Secret" created in AD
+                options.Scope.Add("");
+                options.ClientSecret = "";// the "value" of the "Secret" created in AD
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
             });
             var app = builder.Build();
