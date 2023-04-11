@@ -12,6 +12,7 @@ namespace AzureADB2CWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // This is using Cookie under the hood
@@ -21,6 +22,7 @@ namespace AzureADB2CWeb
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 // After adding the policy, copy the part before ".well_known" from the URL
+                //https://AzureADB2CmikeDomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/<policy-name>/v2.0/.well-known/openid-configuration
                 options.Authority = "https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
                 options.ClientId = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
                 //options.ResponseType = "id_token";   // This value must match AD's configuration, another option is "Access Token"?
@@ -36,7 +38,7 @@ namespace AzureADB2CWeb
                 options.SaveTokens = true;
                 //see tutorial why we need add this key.
                 options.Scope.Add("570c99e9-8b2e-45c9-97d9-ebebf5f141de"); // same as ClientId
-                options.ClientSecret = "dOS8Q~Z~ctkfGKsuHcMiQlc.YXRVsmj5mKOtwdc5";
+                options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
             });
             var app = builder.Build();
