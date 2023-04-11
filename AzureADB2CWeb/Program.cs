@@ -34,7 +34,8 @@ namespace AzureADB2CWeb
                  */
                 options.ResponseType = "code";    // when authenticate with "secret" other than "token"
                 options.SaveTokens = true;
-                //options.Scope.Add("");
+                //see tutorial why we need add this key.
+                options.Scope.Add("570c99e9-8b2e-45c9-97d9-ebebf5f141de"); // same as ClientId
                 options.ClientSecret = "dOS8Q~Z~ctkfGKsuHcMiQlc.YXRVsmj5mKOtwdc5";
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
             });
