@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace AzureADB2CWeb.Controllers
 {
@@ -23,6 +24,10 @@ namespace AzureADB2CWeb.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var b2cObjectId = ((ClaimsIdentity)(HttpContext.User.Identity)).FindFirst(ClaimTypes.NameIdentifier);
+            }
             return View();
         }
 

@@ -1,6 +1,8 @@
 using AzureADB2CWeb.Data;
+using AzureADB2CWeb.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +18,8 @@ namespace AzureADB2CWeb
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConection")));
             builder.Services.AddAuthentication(options =>
             {
