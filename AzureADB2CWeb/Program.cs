@@ -43,7 +43,8 @@ namespace AzureADB2CWeb
                 //see tutorial why we need add this key.
                 options.Scope.Add("570c99e9-8b2e-45c9-97d9-ebebf5f141de"); // same as ClientId
                 options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
-                options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
+                //options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" }; 
+                options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
             });
             var app = builder.Build();
 
