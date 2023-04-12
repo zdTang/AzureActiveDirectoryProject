@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AzureADB2CWeb.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AzureADB2CWeb.Data
 {
