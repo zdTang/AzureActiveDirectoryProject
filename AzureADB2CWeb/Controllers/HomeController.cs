@@ -53,6 +53,15 @@ namespace AzureADB2CWeb.Controllers
             return View();
         }
 
+        public IActionResult HomeOwner()
+        {
+            return View();
+        }
+        public IActionResult Contractor()
+        {
+            return View();
+        }
+
         // must give it a Redirection URL, or after Challenge, it will be confused where to go and will encounter Dead Loop
         public IActionResult SignIn()
         {
