@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
+
 namespace AzureADB2CApi
 {
     public class Program
@@ -7,7 +10,19 @@ namespace AzureADB2CApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            // Here add services and setup it.
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(
+                options =>
+                {
+                    builder.Configuration.Bind("AzureADB2C", options);
+                    //options.TokenValidationParameters.NameClaimType = "name";
+                },
+                options =>
+                {
+                    builder.Configuration.Bind("AzureADB2C", options);
+                }
+                );
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -23,7 +38,7 @@ namespace AzureADB2CApi
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();// Here to setup pipeline to use it.
             app.UseAuthorization();
 
 
