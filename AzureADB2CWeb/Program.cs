@@ -70,7 +70,8 @@ namespace AzureADB2CWeb
                 //        opt.Principal.AddIdentity(appIdentity);
                 //    }
                 //};
-            });
+            }).AddOpenIdConnect("B2C_1_Edit", GetOpenIdConnectOptions("B2C_1_Edit"));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -95,5 +96,22 @@ namespace AzureADB2CWeb
 
             app.Run();
         }
+
+        private static Action<OpenIdConnectOptions> GetOpenIdConnectOptions(string policy) => options =>
+        {
+            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            // After adding the policy, copy the part before ".well_known" from the URL
+            //https://AzureADB2CmikeDomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/<policy-name>/v2.0/.well-known/openid-configuration
+            options.Authority = $"https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/{policy}/v2.0/";
+            options.ClientId = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
+            options.ResponseType = "code";    // when authenticate with "secret" other than "token"
+            options.SaveTokens = true;
+            options.Scope.Add(options.ClientId); // same as ClientId
+            options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
+            options.CallbackPath = "/signin-oidc-" + policy;
+            options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
+        };
     }
+
+
 }
