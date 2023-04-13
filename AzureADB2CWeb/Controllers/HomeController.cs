@@ -53,12 +53,14 @@ namespace AzureADB2CWeb.Controllers
         {
             return View();
         }
-        [Permission("homeowner")]
+        [Authorize(Roles = "homeowner")]
+        //[Permission("homeowner")]
         public IActionResult HomeOwner()
         {
             return View();
         }
-        [Permission("contractor")]
+        [Authorize(Roles = "contractor")]
+        //[Permission("contractor")]
         public IActionResult Contractor()
         {
             return View();
