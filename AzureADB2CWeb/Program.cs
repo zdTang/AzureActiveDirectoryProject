@@ -20,6 +20,13 @@ namespace AzureADB2CWeb
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddHttpContextAccessor();
+            // Should understand how to setup Session
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConection")));
             builder.Services.AddAuthentication(options =>
             {
@@ -67,7 +74,7 @@ namespace AzureADB2CWeb
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using AzureADB2CWeb.Services;
+using AzureADB2CWeb.Helper;
 
 namespace AzureADB2CWeb.Controllers
 {
@@ -52,11 +53,12 @@ namespace AzureADB2CWeb.Controllers
         {
             return View();
         }
-
+        [Permission("homeowner")]
         public IActionResult HomeOwner()
         {
             return View();
         }
+        [Permission("contractor")]
         public IActionResult Contractor()
         {
             return View();
