@@ -2,11 +2,8 @@ using AzureADB2CWeb.Data;
 using AzureADB2CWeb.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 
 namespace AzureADB2CWeb
 {
