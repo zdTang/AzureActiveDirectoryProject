@@ -53,14 +53,14 @@ namespace AzureADB2CWeb.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "homeowner")]
-        //[Permission("homeowner")]
+        //[Authorize(Roles = "homeowner")]
+        [Permission("homeowner")]
         public IActionResult HomeOwner()
         {
             return View();
         }
-        [Authorize(Roles = "contractor")]
-        //[Permission("contractor")]
+        //[Authorize(Roles = "contractor")]
+        [Permission("contractor")]
         public IActionResult Contractor()
         {
             return View();
@@ -72,6 +72,11 @@ namespace AzureADB2CWeb.Controllers
             var schema = OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.ActionContext.HttpContext.Request.Scheme + "://" + Url.ActionContext.HttpContext.Request.Host;
             return Challenge(new AuthenticationProperties { RedirectUri = redirectUrl }, schema);
+        }
+
+        public IActionResult EditProfile()
+        {
+            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "B2C_1_Edit"); // Here put the User Flow name 
         }
 
         public IActionResult SignOut()

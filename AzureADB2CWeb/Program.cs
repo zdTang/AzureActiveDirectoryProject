@@ -57,19 +57,19 @@ namespace AzureADB2CWeb
                 options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
                 //options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" }; 
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
-                options.Events = new OpenIdConnectEvents
-                {
-                    OnTokenValidated = async opt =>
-                    {
-                        string role = opt.Principal.FindFirstValue("extension_UserRole");
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Role, role),
-                        };
-                        var appIdentity = new ClaimsIdentity(claims);
-                        opt.Principal.AddIdentity(appIdentity);
-                    }
-                };
+                //options.Events = new OpenIdConnectEvents
+                //{
+                //    OnTokenValidated = async opt =>
+                //    {
+                //        string role = opt.Principal.FindFirstValue("extension_UserRole");
+                //        var claims = new List<Claim>
+                //        {
+                //            new Claim(ClaimTypes.Role, role),
+                //        };
+                //        var appIdentity = new ClaimsIdentity(claims);
+                //        opt.Principal.AddIdentity(appIdentity);
+                //    }
+                //};
             });
             var app = builder.Build();
 
