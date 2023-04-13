@@ -107,6 +107,22 @@ namespace AzureADB2CWeb
             options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
             options.CallbackPath = "/signin-oidc-" + policy;
             options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
+            //This can handel when user click "Cancel" error, will direct to Home page
+            options.Events = new OpenIdConnectEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    if (!string.IsNullOrEmpty(context.ProtocolMessage.Error) && !string.IsNullOrEmpty(context.ProtocolMessage.ErrorDescription))
+                    {
+                        if (context.ProtocolMessage.Error.Contains("access_denied"))
+                        {
+                            context.HandleResponse();
+                            context.Response.Redirect("/");
+                        }
+                    }
+                    return Task.FromResult(0);
+                }
+            };
         };
     }
 
