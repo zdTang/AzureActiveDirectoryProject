@@ -97,14 +97,14 @@ namespace AzureADB2CWeb.Controllers
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var client = _httpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7078/WeatherForecast");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44345/WeatherForecast");
             request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, accessToken);
             var response = await client.SendAsync(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
 
             }
-            return Content(response.ToString());
+            return Content(await response.Content.ReadAsStringAsync());
         }
 
     }
