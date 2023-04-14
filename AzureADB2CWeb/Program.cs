@@ -9,6 +9,20 @@ namespace AzureADB2CWeb
 {
     public class Program
     {
+
+        public static string Tenant = "AzureADB2CmikeDomain.onmicrosoft.com";
+        public static string AzureADB2CHostname = "azureadb2cmikedomain.b2clogin.com";
+        public static string ClientID = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
+        public static string PolicySignUpSignIn = "B2C_1_SignIn_Up";
+        public static string PolicyEditProfile = "B2C_1_Edit";
+        public static string ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
+        // this scope copied from WEB API project-"Expose an API" Menu
+        public static string Scope = "https://AzureADB2CmikeDomain.onmicrosoft.com/da920a6c-ecdb-4863-92a4-d580dc8883f3/fullAccess"; // Now we are going to access the API so that we need use the new scope
+
+        public static string AuthorityBase = $"https://{AzureADB2CHostname}/{Tenant}";
+        public static string AuthoritySignInUp = $"{AuthorityBase}/{PolicySignUpSignIn}/v2.0";
+        public static string AuthorityEditProfile = $"{AuthorityBase}/{PolicyEditProfile}/v2.0";
+        //options.Authority = "https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -36,8 +50,8 @@ namespace AzureADB2CWeb
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 // After adding the policy, copy the part before ".well_known" from the URL
                 //https://AzureADB2CmikeDomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/<policy-name>/v2.0/.well-known/openid-configuration
-                options.Authority = "https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
-                options.ClientId = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
+                options.Authority = AuthoritySignInUp;
+                options.ClientId = ClientID;
                 //options.ResponseType = "id_token";   // This value must match AD's configuration, another option is "Access Token"?
 
                 //https://sazzer.github.io/blog/2016/09/03/OpenID-Connect-Response-Types/
@@ -50,8 +64,8 @@ namespace AzureADB2CWeb
                 options.ResponseType = "code";    // when authenticate with "secret" other than "token"
                 options.SaveTokens = true;
                 //see tutorial why we need add this key.
-                options.Scope.Add("570c99e9-8b2e-45c9-97d9-ebebf5f141de"); // same as ClientId
-                options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
+                options.Scope.Add(Scope); // same as ClientId
+                options.ClientSecret = ClientSecret;
                 //options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" }; 
                 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
                 //options.Events = new OpenIdConnectEvents
@@ -99,12 +113,12 @@ namespace AzureADB2CWeb
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             // After adding the policy, copy the part before ".well_known" from the URL
             //https://AzureADB2CmikeDomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/<policy-name>/v2.0/.well-known/openid-configuration
-            options.Authority = $"https://azureadb2cmikedomain.b2clogin.com/AzureADB2CmikeDomain.onmicrosoft.com/{policy}/v2.0/";
-            options.ClientId = "570c99e9-8b2e-45c9-97d9-ebebf5f141de";
+            options.Authority = AuthorityEditProfile;
+            options.ClientId = ClientID;
             options.ResponseType = "code";    // when authenticate with "secret" other than "token"
             options.SaveTokens = true;
-            options.Scope.Add(options.ClientId); // same as ClientId
-            options.ClientSecret = "Sl18Q~PhmN6gu~ChyFpySKLYQetcvkjQCt-4Jc~P";
+            options.Scope.Add(Scope); // same as ClientId
+            options.ClientSecret = ClientSecret;
             options.CallbackPath = "/signin-oidc-" + policy;
             options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" };
             //This can handel when user click "Cancel" error, will direct to Home page
